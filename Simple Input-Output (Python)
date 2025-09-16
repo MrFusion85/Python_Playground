@@ -1,0 +1,3 @@
+i = input("Enter something please: ")
+
+print(i)
