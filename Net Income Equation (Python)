@@ -1,0 +1,10 @@
+# Created by Charlie Mitchell
+# Copyright 2018, 2025
+
+r = float(input("Please enter your total ammount of revenues: \n"))
+
+e = float(input("Please enter your total ammount of expenses: \n"))
+    
+i = r - e
+
+print("Your net income is $", i)
