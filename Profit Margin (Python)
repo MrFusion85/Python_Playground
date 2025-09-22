@@ -1,0 +1,10 @@
+# Created by Charlie Mitchell
+# Copyright 2018, 2025
+
+i = float(input("Please enter your net income: \n"))
+
+s = float(input("Please enter your total sales: \n"))
+    
+m = i / s;
+
+print("Your profit margin is $", m, "per unit.")
