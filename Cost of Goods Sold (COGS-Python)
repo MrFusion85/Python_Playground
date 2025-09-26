@@ -1,0 +1,12 @@
+# Created by Charlie Mitchell
+# Copyright 2018, 2025
+
+b = float(input("Please enter your beginning inventory: \n"))
+
+p = float(input("Please enter your amount of purchases: \n"))
+
+e = float(input("Please enter your ending inventory: \n"))
+    
+c = b + p - e;
+
+print("Your cost of goods sold is $", c)
