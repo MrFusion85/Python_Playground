@@ -1,3 +1,6 @@
+# Created by Charlie Mitchell
+# Copyright 2018, 2025
+
 i = input("Enter something please: ")
 
 print(i)
