@@ -1,2 +1,5 @@
+# Created by Charlie Mitchell
+# Copyright 2018, 2025
+
 print (7 % 2)
 print (2 % 7)
