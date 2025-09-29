@@ -1,0 +1,10 @@
+# Created by Charlie Mitchell
+# Copyright 2018, 2025
+
+l = float(input("Please enter your amount of liabilities: \n"))
+
+e = float(input("Please enter your amount of equity: \n"))
+    
+a = l + e
+
+print("Your total assets equal $", a)
