@@ -1,0 +1,12 @@
+# Created by Charlie Mitchell
+# Copyright 2018, 2025
+
+f = float(input("Please enter your total amount of fixed costs: \n"))
+
+p = float(input("Please enter your sales price per unit: \n"))
+
+c = float(input("Please enter your variable costs per unit: \n"))
+    
+b = f / (p - c);
+
+print("Your break-even point is", b, "units.")
