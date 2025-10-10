@@ -1,0 +1,15 @@
+# Created by Charlie Mitchell
+# Copyright 2018, 2025
+
+p = float(input("Please enter the principle amount: \n"))
+
+t = float(input("Please enter the amount of time (in years): \n"))
+
+n = float(input("Please enter the number of times compounded per year: \n"))
+
+r = float(input("Please enter the interest rate (as a decimal): \n"))
+    
+x = (1 + (r / n)) ** (n * t);
+a = p * x;
+
+print("Your principle contribution of $", p, ", will grow to $", a, " after", t, "years.")
