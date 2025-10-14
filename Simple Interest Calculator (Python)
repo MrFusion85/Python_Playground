@@ -1,0 +1,12 @@
+# Created by Charlie Mitchell
+# Copyright 2018, 2025
+
+p = float(input("Please enter the principle amount: \n"))
+
+t = float(input("Please enter the amount of time (in years): \n"))
+
+r = float(input("Please enter the interest rate (as a decimal): \n"))
+
+a = p * (1 + (r * t));
+
+print("Your principle contribution of $", p, ", will grow to $", a, " after", t, "years.")
