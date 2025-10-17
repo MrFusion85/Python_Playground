@@ -1,0 +1,11 @@
+# Created by Charlie Mitchell
+# Copyright 2018, 2025
+
+c = float(input("Please enter your total amount of cash and cash equivalents: \n"))
+
+l = float(input("Please enter your total amount of current liabilities: \n"))
+    
+x = c / l;
+r = x * 100;
+
+print("Your current cash ratio is", r, "%")
