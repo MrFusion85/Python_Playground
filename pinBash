@@ -1,0 +1,16 @@
+# Created by Charlie Mitchell
+# Copyright 2025
+
+x = 0
+
+while x <= 9999:
+    a = str(x)
+    if x <= 9:
+        print('000' + a)
+    if x >= 10 and x <= 99:
+        print('00' + a)
+    if x >= 100 and x <= 999:
+        print('0' + a)
+    if x >= 1000 and x <= 9999:
+        print(a)
+    x = x + 1
