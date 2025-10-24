@@ -1,0 +1,100 @@
+# rtttl_player.py
+import numpy as np
+import simpleaudio as sa
+
+# Frequencies for notes (equal temperament, A4 = 440Hz)
+NOTE_FREQUENCIES = {
+    'c': 16.35, 'c#': 17.32, 'd': 18.35, 'd#': 19.45,
+    'e': 20.60, 'f': 21.83, 'f#': 23.12, 'g': 24.50,
+    'g#': 25.96, 'a': 27.50, 'a#': 29.14, 'b': 30.87
+}
+
+def note_to_freq(note: str, octave: int) -> float:
+    """Convert note name + octave to frequency."""
+    base_note = note.lower()
+    if base_note not in NOTE_FREQUENCIES:
+        return 0  # pause
+    return NOTE_FREQUENCIES[base_note] * (2 ** octave)
+
+def generate_tone(freq: float, duration_ms: int, sample_rate=44100):
+    """Generate a waveform for a given frequency & duration."""
+    if freq == 0:  # pause
+        return np.zeros(int(sample_rate * duration_ms / 1000), dtype=np.int16)
+
+    t = np.linspace(0, duration_ms / 1000, int(sample_rate * duration_ms / 1000), False)
+    wave = np.sin(freq * t * 2 * np.pi)
+    audio = wave * (2**15 - 1) / np.max(np.abs(wave))
+    return audio.astype(np.int16)
+
+def play_rtttl(rtttl: str):
+    """Parse RTTTL string and play it back."""
+    name, defaults, notes_str = rtttl.split(":")
+    defaults = dict(item.split("=") for item in defaults.split(","))
+    
+    d = int(defaults.get("d", 4))
+    o = int(defaults.get("o", 5))
+    b = int(defaults.get("b", 120))
+
+    # Duration of a whole note (ms)
+    whole_note = (60 / b) * 4 * 1000
+
+    notes = notes_str.split(",")
+    for raw_note in notes:
+        raw_note = raw_note.strip().lower()
+        dur = d
+        note = ""
+        octave = o
+
+        # If note starts with a number, that's the duration
+        if raw_note and raw_note[0].isdigit():
+            i = 0
+            num = ""
+            while i < len(raw_note) and raw_note[i].isdigit():
+                num += raw_note[i]
+                i += 1
+            dur = int(num)
+            raw_note = raw_note[i:]
+
+        # Handle pause
+        if raw_note == "p":
+            freq = 0
+        else:
+            # Check for sharp
+            if len(raw_note) >= 2 and raw_note[1] == "#":
+                note = raw_note[:2]
+                raw_note = raw_note[2:]
+            else:
+                note = raw_note[0]
+                raw_note = raw_note[1:]
+
+            # If remaining is a digit, it's the octave
+            if raw_note.isdigit():
+                octave = int(raw_note)
+
+            freq = note_to_freq(note, octave)
+
+        note_duration = whole_note / dur
+        audio = generate_tone(freq, int(note_duration))
+        sa.play_buffer(audio, 1, 2, 44100).wait_done()
+
+def build_rtttl():
+    print("=== RTTTL Ringtone Creator ===")
+    name = input("Song name (no spaces): ") or "MySong"
+    duration = input("Default duration (e.g., 4): ") or "4"
+    octave = input("Default octave (e.g., 5): ") or "5"
+    tempo = input("Tempo BPM (e.g., 120): ") or "120"
+
+    print("\nEnter your notes as a comma-separated list.")
+    print("Example: c, d, e, f, g, a, b, c6")
+    notes = input("Notes: ")
+
+    rtttl = f"{name}:d={duration},o={octave},b={tempo}: {notes}"
+    print("\nYour RTTTL string:\n")
+    print(rtttl)
+    return rtttl
+
+if __name__ == "__main__":
+    rtttl = build_rtttl()
+    play = input("\nPlay this ringtone? (y/n): ").lower()
+    if play == "y":
+        play_rtttl(rtttl)
